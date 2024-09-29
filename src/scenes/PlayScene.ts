@@ -13,10 +13,20 @@ class PlayScene extends Phaser.Scene {
         return this.game.config.height as number;
     }
 
-    create(){
+    create(){  
+        this.createSceneEnvironment();
+        this.createPlayer();
+    }
 
+    // Draw scene environment
+    createSceneEnvironment(){
         // Draw ground
-        this.add.tileSprite(0, this.gameHeight, 1000, 26, 'ground').setOrigin(0, 1);
+        return this.add.tileSprite(0, this.gameHeight, 1000, 26, 'ground').setOrigin(0, 1);
+    }
+
+    // 
+    createPlayer(){
+        return this.physics.add.sprite(0, this.gameHeight, 'player').setOrigin(0, 1);
     }
 
 };
