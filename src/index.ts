@@ -1,5 +1,5 @@
-
 import Phaser from "phaser";
+import PreloadScene from "./scenes/PreloadScene";
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -19,9 +19,7 @@ const config: Phaser.Types.Core.GameConfig = {
 
 new Phaser.Game(config);
 
-function preload () {
-  this.load.image('sky', 'assets/sky.png');
-}
+
 
 function create () {
   this.add.image(400, 300, 'sky');
