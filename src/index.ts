@@ -1,5 +1,7 @@
 import Phaser from "phaser";
+import PlayScene from "./scenes/PlayScene";
 import PreloadScene from "./scenes/PreloadScene";
+
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -11,16 +13,8 @@ const config: Phaser.Types.Core.GameConfig = {
       gravity: { y: 200 }
     }
   },
-  scene: {
-    preload: preload,
-    create: create
-  }
+  scene: [PreloadScene, PlayScene]
 };
 
 new Phaser.Game(config);
 
-
-
-function create () {
-  this.add.image(400, 300, 'sky');
-}

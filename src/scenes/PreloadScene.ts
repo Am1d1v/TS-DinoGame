@@ -10,6 +10,10 @@ class PreloadScene extends Phaser.Scene {
         this.load.image('ground', 'assets/ground.png');
     }
 
+    create(){
+        this.scene.start('PlayScene');
+    }
+
 };
 
 export default PreloadScene;
