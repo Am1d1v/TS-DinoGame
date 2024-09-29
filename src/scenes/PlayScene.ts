@@ -7,7 +7,8 @@ class PlayScene extends Phaser.Scene {
     };
 
     create(){
-        alert('PlayScene Loaded')
+        // Draw ground
+        this.add.tileSprite(0, 330, 1000, 26, 'ground').setOrigin(0, 1);
     }
 
 };
