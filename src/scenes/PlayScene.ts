@@ -37,7 +37,7 @@ class PlayScene extends Phaser.Scene {
         // Jump Up
         const spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         spaceBar.on('down', () => {
-            console.log('Jump');
+            this.player.body.setVelocityY(-110);
         });
     }
 
