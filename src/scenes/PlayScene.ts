@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { SpriteWithDynamicBody } from "../types";
 
 
 class PlayScene extends Phaser.Scene {
@@ -8,7 +9,7 @@ class PlayScene extends Phaser.Scene {
         
     };
 
-    player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+    player: SpriteWithDynamicBody
 
     // Get game height
     get gameHeight(){
@@ -30,6 +31,12 @@ class PlayScene extends Phaser.Scene {
     // 
     createPlayer(){
         this.player = this.physics.add.sprite(0, this.gameHeight, 'player').setOrigin(0, 1);
+
+        // Set gravity to player
+        this.player.setGravityY(30);
+
+        // Set world boundaries
+        this.player.setCollideWorldBounds(true);
     }
 
     // Register player inputs
