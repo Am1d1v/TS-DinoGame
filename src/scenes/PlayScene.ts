@@ -9,7 +9,11 @@ class PlayScene extends Phaser.Scene {
         
     };
 
+    // Player's Sprite
     player: SpriteWithDynamicBody
+
+    // Trigger that starts the game
+    startGameTrigger: SpriteWithDynamicBody;
 
     // Get game height
     get gameHeight(){
@@ -19,6 +23,7 @@ class PlayScene extends Phaser.Scene {
     create(){  
         this.createSceneEnvironment();
         this.createPlayer();
+        this.startGameTrigger = this.physics.add.sprite(0, 30, null).setOrigin(0, 1);
         this.registerPlayerControl();
     }
 
@@ -42,7 +47,7 @@ class PlayScene extends Phaser.Scene {
 
     // Register player inputs
     registerPlayerControl(){
-        // Jump Up
+        // Jump Up using space bar
         const spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         spaceBar.on('down', () => {
             this.player.body.setVelocityY(-110);
