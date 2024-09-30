@@ -33,10 +33,11 @@ class PlayScene extends Phaser.Scene {
         this.player = this.physics.add.sprite(0, this.gameHeight, 'player').setOrigin(0, 1);
 
         // Set gravity to player
-        this.player.setGravityY(30);
-
+        this.player.setGravityY(30)
         // Set world boundaries
-        this.player.setCollideWorldBounds(true);
+        .setCollideWorldBounds(true)
+        // Set Player's body size
+        .setBodySize(45, this.player.height - 10)
     }
 
     // Register player inputs
