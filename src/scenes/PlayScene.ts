@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { SpriteWithDynamicBody } from "../types";
+import Player from "../entities/Player";
 
 
 class PlayScene extends Phaser.Scene {
@@ -23,8 +24,13 @@ class PlayScene extends Phaser.Scene {
     create(){  
         this.createSceneEnvironment();
         this.createPlayer();
-        this.startGameTrigger = this.physics.add.sprite(0, 30, null).setOrigin(0, 1);
+        this.startGameTrigger = this.physics.add.sprite(0, 30, null).setAlpha(0).setOrigin(0, 1);
         this.registerPlayerControl();
+
+        this.physics.add.overlap(this.startGameTrigger, this.player, () => {
+            console.log('Collision');
+            this.startGameTrigger = this.physics.add.sprite(0, this.gameHeight, null).setAlpha(0).setOrigin(0, 1);
+        });
     }
 
     // Draw scene environment
@@ -50,7 +56,7 @@ class PlayScene extends Phaser.Scene {
         // Jump Up using space bar
         const spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         spaceBar.on('down', () => {
-            this.player.body.setVelocityY(-110);
+            this.player.body.setVelocityY(-200);
         });
     }
 
