@@ -11,7 +11,7 @@ class PlayScene extends Phaser.Scene {
     };
 
     // Player's Sprite
-    player: SpriteWithDynamicBody
+    player: Player
 
     // Trigger that starts the game
     startGameTrigger: SpriteWithDynamicBody;
@@ -39,16 +39,9 @@ class PlayScene extends Phaser.Scene {
         this.add.tileSprite(0, this.gameHeight, 1000, 26, 'ground').setOrigin(0, 1);
     }
 
-    // 
+    // Render player 
     createPlayer(){
-        this.player = this.physics.add.sprite(0, this.gameHeight, 'player').setOrigin(0, 1);
-
-        // Set gravity to player
-        this.player.setGravityY(30)
-        // Set world boundaries
-        .setCollideWorldBounds(true)
-        // Set Player's body size
-        .setBodySize(45, this.player.height - 10)
+        this.player = new Player(this, 0, this.gameHeight, 'player').setOrigin(0, 1);
     }
 
     // Register player inputs
@@ -56,7 +49,7 @@ class PlayScene extends Phaser.Scene {
         // Jump Up using space bar
         const spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         spaceBar.on('down', () => {
-            this.player.body.setVelocityY(-200);
+            this.player.setVelocityY(-200);
         });
     }
 
