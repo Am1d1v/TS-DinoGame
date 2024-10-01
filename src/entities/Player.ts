@@ -42,9 +42,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update(): void {
         // Get space bar
         const {space} = this.cursors; 
+        // Make space bar interactive once per push
+        const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space)
 
         // Jump(Change Y velocity) using space bar 
-        if(space.isDown){
+        if(isSpaceJustDown){
             this.setVelocityY(-1000);
         }
     }
