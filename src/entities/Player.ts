@@ -8,6 +8,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
 
         this.init();
+        this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
     }
 
     // Player initialization
@@ -21,17 +22,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // Set Player's body size
             .setBodySize(45, this.height - 10);
 
-        this.registerPlayerControl();    
+        //this.registerPlayerControl();    
         
     }
 
     // Register player inputs
-    registerPlayerControl(){
-        // Jump Up using space bar
-        const spaceBar = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        spaceBar.on('down', () => {
-            this.setVelocityY(-1000);
-        });
+    // registerPlayerControl(){
+    //     // Jump Up using space bar
+    //     const spaceBar = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    //     spaceBar.on('down', () => {
+    //         this.setVelocityY(-1000);
+    //     });
+    // }
+
+    update(): void {
+            
     }
+
 }
 export default Player;
