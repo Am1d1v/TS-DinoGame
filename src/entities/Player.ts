@@ -42,11 +42,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update(): void {
         // Get space bar
         const {space} = this.cursors; 
-        // Make space bar interactive once per push
-        const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space)
+        // Make space bar interactive once per push. Block holding space bar spam
+        const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space);
 
+        // Check that the player is on the floor(ground)
+        const onFloor = (this.body as Phaser.Physics.Arcade.Body).onFloor();
+        
         // Jump(Change Y velocity) using space bar 
-        if(isSpaceJustDown){
+        if(isSpaceJustDown && onFloor){
             this.setVelocityY(-1000);
         }
     }
