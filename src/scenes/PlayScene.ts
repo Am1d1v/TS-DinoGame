@@ -25,7 +25,6 @@ class PlayScene extends Phaser.Scene {
         this.createSceneEnvironment();
         this.createPlayer();
         this.startGameTrigger = this.physics.add.sprite(0, 30, null).setAlpha(0).setOrigin(0, 1);
-        this.registerPlayerControl();
 
         this.physics.add.overlap(this.startGameTrigger, this.player, () => {
             console.log('Collision');
@@ -42,16 +41,10 @@ class PlayScene extends Phaser.Scene {
     // Render player 
     createPlayer(){
         this.player = new Player(this, 0, this.gameHeight, 'player').setOrigin(0, 1);
+
+        
     }
 
-    // Register player inputs
-    registerPlayerControl(){
-        // Jump Up using space bar
-        const spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        spaceBar.on('down', () => {
-            this.player.setVelocityY(-200);
-        });
-    }
 
 };
 
