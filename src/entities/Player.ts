@@ -1,6 +1,9 @@
 
 
 class Player extends Phaser.Physics.Arcade.Sprite {
+
+    cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+
     constructor(scene: Phaser.Scene, x: number, y: number, key: string){
         super(scene, x, y, key);
 
@@ -13,6 +16,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Player initialization
     init(){
+        this.cursors = this.scene.input.keyboard.createCursorKeys();
         
         this.setOrigin(0, 1)
             // Set gravity to player
@@ -36,7 +40,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     // }
 
     update(): void {
-            
+        // Get space bar
+        const {space} = this.cursors; 
+
+        // Jump(Change Y velocity) using space bar 
+        if(space.isDown){
+            this.setVelocityY(-1000);
+        }
     }
 
 }
