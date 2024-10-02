@@ -19,6 +19,9 @@ class PlayScene extends Phaser.Scene {
     // 
     ground: Phaser.GameObjects.TileSprite;
 
+    // If true => start generate ground
+    startGroundRoll: boolean = false;
+
     // Get game height
     get gameHeight(){
         return this.game.config.height as number;
@@ -40,7 +43,8 @@ class PlayScene extends Phaser.Scene {
 
             // Hide start game trigger from the scene
             this.startGameTrigger.body.reset(-100, -100);
-            console.log('Start');
+            
+            this.startGroundRoll = true;
             
         });
     }
@@ -59,8 +63,9 @@ class PlayScene extends Phaser.Scene {
     }
 
     // Update scene state
-    update(time: number, delta: number): void {
-        this.ground.width += 30;
+    update(): void {
+        if(this.startGroundRoll) this.ground.width += 18;
+        
     }
 
 
