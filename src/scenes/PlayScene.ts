@@ -24,11 +24,16 @@ class PlayScene extends Phaser.Scene {
     create(){  
         this.createSceneEnvironment();
         this.createPlayer();
+
+        // Trigger that starts the game. Invisible object that launch game.
         this.startGameTrigger = this.physics.add.sprite(0, 30, null).setAlpha(0).setOrigin(0, 1);
 
+        // Move trigger to the ground after first touch
         this.physics.add.overlap(this.startGameTrigger, this.player, () => {
-            console.log('Collision');
-            this.startGameTrigger = this.physics.add.sprite(0, this.gameHeight, null).setAlpha(0).setOrigin(0, 1);
+            if(this.startGameTrigger.y = 30){
+                this.startGameTrigger.y = this.gameHeight;
+            }
+            
         });
     }
 
