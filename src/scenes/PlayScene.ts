@@ -27,6 +27,11 @@ class PlayScene extends Phaser.Scene {
         return this.game.config.height as number;
     }
 
+    // Get game width
+    get gameWidth(){
+        return this.game.config.width as number;
+    }
+
     create(){  
         this.createSceneEnvironment();
         this.createPlayer();
@@ -44,7 +49,17 @@ class PlayScene extends Phaser.Scene {
             // Hide start game trigger from the scene
             this.startGameTrigger.body.reset(-100, -100);
             
-            this.startGroundRoll = true;
+            //this.startGroundRoll = true;
+
+            this.time.addEvent({
+                delay: 1000 / 16,
+                loop: true,
+                callback: () => {
+                    if(this.ground.width <= this.gameWidth){
+                        this.ground.width += 30;
+                    } 
+                }
+            })
             
         });
     }
@@ -64,7 +79,8 @@ class PlayScene extends Phaser.Scene {
 
     // Update scene state
     update(): void {
-        if(this.startGroundRoll) this.ground.width += 18;
+        // If true => start generate ground
+        //if(this.startGroundRoll) this.ground.width += 18;
         
     }
 
