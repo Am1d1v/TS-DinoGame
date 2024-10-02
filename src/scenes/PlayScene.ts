@@ -30,9 +30,14 @@ class PlayScene extends Phaser.Scene {
 
         // Move trigger to the ground after first touch
         this.physics.add.overlap(this.startGameTrigger, this.player, () => {
-            if(this.startGameTrigger.y = 30){
-                this.startGameTrigger.y = this.gameHeight;
+            if(this.startGameTrigger.y === 30){
+                this.startGameTrigger.body.reset(0, this.gameHeight);
+                return
             }
+
+            // Hide start game trigger from the scene
+            this.startGameTrigger.body.reset(-100, -100);
+            console.log('Start');
             
         });
     }
