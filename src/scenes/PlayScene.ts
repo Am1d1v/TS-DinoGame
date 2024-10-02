@@ -16,6 +16,9 @@ class PlayScene extends Phaser.Scene {
     // Trigger that starts the game
     startGameTrigger: SpriteWithDynamicBody;
 
+    // 
+    ground: Phaser.GameObjects.TileSprite;
+
     // Get game height
     get gameHeight(){
         return this.game.config.height as number;
@@ -45,7 +48,7 @@ class PlayScene extends Phaser.Scene {
     // Draw scene environment
     createSceneEnvironment(){
         // Draw ground
-        this.add.tileSprite(0, this.gameHeight, 1000, 26, 'ground').setOrigin(0, 1);
+        this.ground = this.add.tileSprite(0, this.gameHeight, 90, 26, 'ground').setOrigin(0, 1);
     }
 
     // Render player 
@@ -53,6 +56,11 @@ class PlayScene extends Phaser.Scene {
         this.player = new Player(this, 0, this.gameHeight, 'player').setOrigin(0, 1);
 
         
+    }
+
+    // Update scene state
+    update(time: number, delta: number): void {
+        this.ground.width += 30;
     }
 
 
