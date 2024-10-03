@@ -49,6 +49,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         } else {
             this.play('player-run', true);
         }
+
+        // Prevent running on the same place on the start of the game
+        if(this.body.x < 22){
+            this.anims.stop();
+        }
     }
 
     // Play run animation
