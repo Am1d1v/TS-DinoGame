@@ -56,16 +56,19 @@ class PlayScene extends Phaser.Scene {
                 loop: true,
                 callback: () => {
                         // Roll out the ground
-                        this.ground.width += 30;
-
-                        if(this.ground.width >= this.gameWidth){
-                            groundRollOutEvent.remove();
-                        }
+                        this.ground.width += 45;
 
                         // Push player to the front(X axis direction)
                         this.player.setVelocityX(90);
+
+                        if(this.ground.width >= this.gameWidth){
+                            groundRollOutEvent.remove();
+                            this.player.setVelocityX(0);
+                        }
                 }
-            })
+            });
+
+
             
         });
     }
@@ -83,12 +86,7 @@ class PlayScene extends Phaser.Scene {
         
     }
 
-    // Update scene state
-    update(): void {
-        // If true => start generate ground
-        //if(this.startGroundRoll) this.ground.width += 18;
-        
-    }
+    
 
 
 };

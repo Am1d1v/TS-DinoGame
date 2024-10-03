@@ -24,20 +24,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // Set world boundaries
             .setCollideWorldBounds(true)
             // Set Player's body size
-            .setBodySize(45, this.height - 10);
+            .setBodySize(45, this.height - 10);   
 
-        //this.registerPlayerControl();    
-        
+        this.registerPlayerAnimation();
     }
-
-    // Register player inputs
-    // registerPlayerControl(){
-    //     // Jump Up using space bar
-    //     const spaceBar = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    //     spaceBar.on('down', () => {
-    //         this.setVelocityY(-1000);
-    //     });
-    // }
 
     update(): void {
         // Get space bar
@@ -52,6 +42,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if(isSpaceJustDown && onFloor){
             this.setVelocityY(-1000);
         }
+    }
+
+    // Register player animation
+    registerPlayerAnimation(){
+        this.anims.create({
+            key: 'player-run',
+            frames: this.anims.generateFrameNumbers('playerRunAnimation'),
+            frameRate: 10,
+            repeat: -1
+        });
     }
 
 }
