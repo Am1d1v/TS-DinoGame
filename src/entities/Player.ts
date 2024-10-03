@@ -42,6 +42,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if(isSpaceJustDown && onFloor){
             this.setVelocityY(-1000);
         }
+
+        // Stop running animation while player is not on the floor
+        if(!onFloor){
+            this.anims.stop();
+        } else {
+            this.play('player-run', true);
+        }
     }
 
     // Play run animation
