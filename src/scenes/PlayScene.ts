@@ -58,6 +58,9 @@ class PlayScene extends Phaser.Scene {
                         // Roll out the ground
                         this.ground.width += 45;
 
+                        // Play run aniamtion
+                        this.player.playRunAnimation();
+
                         // Push player to the front(X axis direction)
                         this.player.setVelocityX(90);
 
