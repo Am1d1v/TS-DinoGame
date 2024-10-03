@@ -51,13 +51,19 @@ class PlayScene extends Phaser.Scene {
             
             //this.startGroundRoll = true;
 
-            this.time.addEvent({
+            const groundRollOutEvent = this.time.addEvent({
                 delay: 1000 / 16,
                 loop: true,
                 callback: () => {
-                    if(this.ground.width <= this.gameWidth){
+                        // Roll out the ground
                         this.ground.width += 30;
-                    } 
+
+                        if(this.ground.width >= this.gameWidth){
+                            groundRollOutEvent.remove();
+                        }
+
+                        // Push player to the front(X axis direction)
+                        this.player.setVelocityX(90);
                 }
             })
             
