@@ -31,6 +31,9 @@ class PlayScene extends Phaser.Scene {
     // Accumulation. If it's value > spawnInterval => spawn new obstacle
     spawnTime: number = 0;
 
+    // Group of obstacles
+    obstacles: Phaser.Physics.Arcade.Group;
+
     // Get game height
     get gameHeight(){
         return this.game.config.height as number;
@@ -44,6 +47,8 @@ class PlayScene extends Phaser.Scene {
     create(){  
         this.createSceneEnvironment();
         this.createPlayer();
+
+        this.obstacles = this.physics.add.group();
 
         // Trigger that starts the game. Invisible object that launch game.
         this.startGameTrigger = this.physics.add.sprite(0, 30, null).setAlpha(0).setOrigin(0, 1);
@@ -93,7 +98,7 @@ class PlayScene extends Phaser.Scene {
         this.spawnTime += delta;
 
         if(this.spawnTime > this.spawnInterval){
-            console.log(this.spawnObstacle());
+            this.spawnObstacle();
             this.spawnTime = 0;
         }
     }
@@ -112,7 +117,11 @@ class PlayScene extends Phaser.Scene {
 
     // Spawn Obstacles
     spawnObstacle(){
-        this.add.image(this.gameWidth * 0.5, this.gameHeight * 0.5, `obstacle${Math.floor(Math.random() * 6) + 1}`).setOrigin(0);
+        const randomObstacleNumber = Math.floor(Math.random() * 6) + 1;
+        const distance = Phaser.Math.Between(600, 900);
+
+        this.obstacles.create(distance, this.gameHeight, `obstacle${randomObstacleNumber}`).setOrigin(0, 1);
+        //this.add.image(this.gameWidth * 0.5, this.gameHeight * 0.1, `obstacle${randomObstacleNumber}`).setOrigin(0, 1);
     }
 
     
