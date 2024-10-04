@@ -88,6 +88,16 @@ class PlayScene extends Phaser.Scene {
         });
     }
 
+    // Update scene state
+    update(time: number, delta: number): void {
+        this.spawnTime += delta;
+
+        if(this.spawnTime > this.spawnInterval){
+            console.log(this.spawnObstacle());
+            this.spawnTime = 0;
+        }
+    }
+
     // Draw scene environment
     createSceneEnvironment(){
         // Draw ground
@@ -98,19 +108,14 @@ class PlayScene extends Phaser.Scene {
     createPlayer(){
         this.player = new Player(this, 0, this.gameHeight, 'player').setOrigin(0, 1);
 
-        
     }
 
-    // Update scene state
-    update(time: number, delta: number): void {
-        this.spawnTime += delta;
-
-        if(this.spawnTime > this.spawnInterval){
-            console.log('Spawn');
-            this.spawnTime = 0;
-        }
+    // Spawn Obstacles
+    spawnObstacle(){
+        this.add.image(this.gameWidth * 0.5, this.gameHeight * 0.5, `obstacle${Math.floor(Math.random() * 6) + 1}`).setOrigin(0);
     }
 
+    
 
 };
 

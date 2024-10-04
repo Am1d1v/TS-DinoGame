@@ -17,6 +17,14 @@ class PreloadScene extends Phaser.Scene {
             frameWidth: 88,
             frameHeight: 94
         });
+
+        // Load Obstacles Images
+        this.load.image('obstacle1', 'assets/cactuses_1.png');
+        this.load.image('obstacle2', 'assets/cactuses_2.png');
+        this.load.image('obstacle3', 'assets/cactuses_3.png');
+        this.load.image('obstacle4', 'assets/cactuses_4.png');
+        this.load.image('obstacle5', 'assets/cactuses_5.png');
+        this.load.image('obstacle6', 'assets/cactuses_6.png');
     }
 
     create(){
