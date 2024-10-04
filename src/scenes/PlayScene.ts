@@ -57,7 +57,8 @@ class PlayScene extends Phaser.Scene {
         this.physics.add.overlap(this.startGameTrigger, this.player, () => {
             if(this.startGameTrigger.y === 30){
                 this.startGameTrigger.body.reset(0, this.gameHeight);
-                return
+                this.isGameRunning = true;
+                return;
             }
 
             // Hide start game trigger from the scene
@@ -95,12 +96,17 @@ class PlayScene extends Phaser.Scene {
 
     // Update scene state
     update(time: number, delta: number): void {
-        this.spawnTime += delta;
 
-        if(this.spawnTime > this.spawnInterval){
-            this.spawnObstacle();
-            this.spawnTime = 0;
+        if(this.isGameRunning){
+            this.spawnTime += delta;
+
+            if(this.spawnTime > this.spawnInterval){
+                this.spawnObstacle();
+                this.spawnTime = 0;
+            }
         }
+
+        Phaser.Actions.IncX(this.obstacles.getChildren(), -5) ;
     }
 
     // Draw scene environment
