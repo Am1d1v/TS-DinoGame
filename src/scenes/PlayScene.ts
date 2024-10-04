@@ -22,6 +22,15 @@ class PlayScene extends Phaser.Scene {
     // If true => start generate ground
     startGroundRoll: boolean = false;
 
+    // Check the game is running
+    isGameRunning: boolean = false;
+
+    // Obstacles spawn interval
+    spawnInterval: number = 1500;
+
+    // Accumulation. If it's value > spawnInterval => spawn new obstacle
+    spawnTime: number = 0;
+
     // Get game height
     get gameHeight(){
         return this.game.config.height as number;
@@ -58,11 +67,14 @@ class PlayScene extends Phaser.Scene {
                         // Roll out the ground
                         this.ground.width += 45;
 
+                        // Game is running
+                        this.isGameRunning = true;
+
                         // Play run aniamtion
                         this.player.playRunAnimation();
 
                         // Push player to the front(X axis direction)
-                        this.player.setVelocityX(90);
+                        this.player.setVelocityX(150);
 
                         if(this.ground.width >= this.gameWidth){
                             groundRollOutEvent.remove();
@@ -89,7 +101,15 @@ class PlayScene extends Phaser.Scene {
         
     }
 
-    
+    // Update scene state
+    update(time: number, delta: number): void {
+        this.spawnTime += delta;
+
+        if(this.spawnTime > this.spawnInterval){
+            console.log('Spawn');
+            this.spawnTime = 0;
+        }
+    }
 
 
 };
