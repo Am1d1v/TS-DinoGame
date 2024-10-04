@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import { PRELOAD_CONFIGURATION } from "..";
+
 
 class PreloadScene extends Phaser.Scene {
     constructor(){
@@ -19,12 +21,9 @@ class PreloadScene extends Phaser.Scene {
         });
 
         // Load Obstacles Images
-        this.load.image('obstacle1', 'assets/cactuses_1.png');
-        this.load.image('obstacle2', 'assets/cactuses_2.png');
-        this.load.image('obstacle3', 'assets/cactuses_3.png');
-        this.load.image('obstacle4', 'assets/cactuses_4.png');
-        this.load.image('obstacle5', 'assets/cactuses_5.png');
-        this.load.image('obstacle6', 'assets/cactuses_6.png');
+        for(let i = 1; i <= PRELOAD_CONFIGURATION.cactusesCount; i++){
+            this.load.image(`obstacle${i}`, `assets/cactuses_${i}.png`);
+        }
     }
 
     create(){
