@@ -34,6 +34,9 @@ class PlayScene extends Phaser.Scene {
     // Group of obstacles
     obstacles: Phaser.Physics.Arcade.Group;
 
+    // Movement speed of obstacles
+    obstacleSpeed: number = 5;
+
     // Get game height
     get gameHeight(){
         return this.game.config.height as number;
@@ -106,7 +109,17 @@ class PlayScene extends Phaser.Scene {
             }
         }
 
-        Phaser.Actions.IncX(this.obstacles.getChildren(), -5) ;
+        // Make obstacles move to the player's direction
+        Phaser.Actions.IncX(this.obstacles.getChildren(), -this.obstacleSpeed) ;
+
+        // Remove obstacle if its beyond left scene border
+        this.obstacles.getChildren().forEach((obstacle: SpriteWithDynamicBody)  => {
+            if(obstacle.getBounds().right < 0){
+                this.obstacles.remove(obstacle);
+            }
+
+        });
+    
     }
 
     // Draw scene environment
@@ -124,7 +137,7 @@ class PlayScene extends Phaser.Scene {
     // Spawn Obstacles
     spawnObstacle(){
         const randomObstacleNumber = Math.floor(Math.random() * 6) + 1;
-        const distance = Phaser.Math.Between(600, 900);
+        const distance = Phaser.Math.Between(800, this.gameWidth);
 
         this.obstacles.create(distance, this.gameHeight, `obstacle${randomObstacleNumber}`).setOrigin(0, 1);
         //this.add.image(this.gameWidth * 0.5, this.gameHeight * 0.1, `obstacle${randomObstacleNumber}`).setOrigin(0, 1);
