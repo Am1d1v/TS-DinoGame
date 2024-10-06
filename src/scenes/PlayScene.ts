@@ -60,9 +60,11 @@ class PlayScene extends Phaser.Scene {
 
         // Collide with obstacles
         this.physics.add.collider(this.obstacles, this.player, () => {
-            this.physics.pause();
             this.isGameRunning = false;
             this.obstacleSpeed = 0;
+            this.spawnTime = 0;
+            this.physics.pause();
+            this.player.die();
         });
 
         // Move trigger to the ground after first touch
@@ -151,7 +153,9 @@ class PlayScene extends Phaser.Scene {
         const randomObstacleNumber = Math.floor(Math.random() * 6) + 1;
         const distance = Phaser.Math.Between(800, this.gameWidth);
 
-        this.obstacles.create(distance, this.gameHeight, `obstacle${randomObstacleNumber}`).setOrigin(0, 1);
+        this.obstacles.create(distance, this.gameHeight, `obstacle${randomObstacleNumber}`)
+            .setOrigin(0, 1)
+            .setImmovable()
         //this.add.image(this.gameWidth * 0.5, this.gameHeight * 0.1, `obstacle${randomObstacleNumber}`).setOrigin(0, 1);
     }
 

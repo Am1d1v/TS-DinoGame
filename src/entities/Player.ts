@@ -71,7 +71,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }),
             frameRate: 10,
             repeat: -1
-        });
+        })
+    }
+
+    // Loose Animation
+    die(){
+        //this.anims.stop();
+        this.setTexture('loose');
     }
 
 }

@@ -23,7 +23,10 @@ class PreloadScene extends Phaser.Scene {
         // Load Obstacles Images
         for(let i = 1; i <= PRELOAD_CONFIGURATION.cactusesCount; i++){
             this.load.image(`obstacle${i}`, `assets/cactuses_${i}.png`);
-        }
+        };
+
+        // Load player's loose Image
+        this.load.image('loose', 'assets/dino-hurt.png');
     }
 
     create(){
