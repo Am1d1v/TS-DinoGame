@@ -119,6 +119,9 @@ class PlayScene extends Phaser.Scene {
             }
 
         });
+
+        // Moving the ground in +X direction
+        if(this.isGameRunning) this.ground.tilePositionX += 1
     
     }
 
