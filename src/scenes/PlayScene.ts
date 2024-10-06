@@ -37,6 +37,8 @@ class PlayScene extends Phaser.Scene {
     // Movement speed of obstacles
     obstacleSpeed: number = 5;
 
+    gameSpeed: number = 1;
+
     // Get game height
     get gameHeight(){
         return this.game.config.height as number;
@@ -55,6 +57,13 @@ class PlayScene extends Phaser.Scene {
 
         // Trigger that starts the game. Invisible object that launch game.
         this.startGameTrigger = this.physics.add.sprite(0, 30, null).setAlpha(0).setOrigin(0, 1);
+
+        // Collide with obstacles
+        this.physics.add.collider(this.obstacles, this.player, () => {
+            this.physics.pause();
+            this.isGameRunning = false;
+            this.obstacleSpeed = 0;
+        });
 
         // Move trigger to the ground after first touch
         this.physics.add.overlap(this.startGameTrigger, this.player, () => {
@@ -121,7 +130,7 @@ class PlayScene extends Phaser.Scene {
         });
 
         // Moving the ground in +X direction
-        if(this.isGameRunning) this.ground.tilePositionX += 1
+        if(this.isGameRunning) this.ground.tilePositionX += this.gameSpeed;
     
     }
 
