@@ -27,6 +27,12 @@ class PreloadScene extends Phaser.Scene {
 
         // Load player's loose Image
         this.load.image('loose', 'assets/dino-hurt.png');
+
+        // Load Restart Game Button
+        this.load.image('restart', 'assets/restart.png');
+
+        // Load "Game Over" text png
+        this.load.image('gameOverText', 'assets/game-over.png');
     }
 
     create(){

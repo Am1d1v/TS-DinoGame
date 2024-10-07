@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser, { Physics } from "phaser";
 import { SpriteWithDynamicBody } from "../types";
 import Player from "../entities/Player";
 
@@ -25,7 +25,7 @@ class PlayScene extends Phaser.Scene {
     // Check the game is running
     isGameRunning: boolean = false;
 
-    // Obstacles spawn interval
+    // Obstacles spawn interval`
     spawnInterval: number = 1500;
 
     // Accumulation. If it's value > spawnInterval => spawn new obstacle
@@ -37,7 +37,12 @@ class PlayScene extends Phaser.Scene {
     // Movement speed of obstacles
     obstacleSpeed: number = 5;
 
+    // Ground move speed
     gameSpeed: number = 1;
+
+    gameOverText: Phaser.GameObjects.Image;
+    restartGame: Phaser.GameObjects.Image;
+
 
     // Get game height
     get gameHeight(){
@@ -53,7 +58,15 @@ class PlayScene extends Phaser.Scene {
         this.createSceneEnvironment();
         this.createPlayer();
 
+        // Array of obstacles
         this.obstacles = this.physics.add.group();
+
+        this.gameOverText = this.add.image(0, 0, "gameOverText");
+        this.restartGame = this.add.image(0, 0, "restart");
+
+        // Container for gameover text & restart game button
+        this.add.container(this.gameWidth * 0.5, this.gameHeight * 0.5)
+            .add([this.gameOverText, this.restartGame]);
 
         // Trigger that starts the game. Invisible object that launch game.
         this.startGameTrigger = this.physics.add.sprite(0, 30, null).setAlpha(0).setOrigin(0, 1);
@@ -61,9 +74,9 @@ class PlayScene extends Phaser.Scene {
         // Collide with obstacles
         this.physics.add.collider(this.obstacles, this.player, () => {
             this.isGameRunning = false;
+            this.physics.pause();
             this.obstacleSpeed = 0;
             this.spawnTime = 0;
-            this.physics.pause();
             this.player.die();
         });
 
