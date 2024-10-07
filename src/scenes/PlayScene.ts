@@ -42,6 +42,7 @@ class PlayScene extends Phaser.Scene {
 
     gameOverText: Phaser.GameObjects.Image;
     restartGame: Phaser.GameObjects.Image;
+    gameOverContainer: Phaser.GameObjects.Container;
 
 
     // Get game height
@@ -62,11 +63,13 @@ class PlayScene extends Phaser.Scene {
         this.obstacles = this.physics.add.group();
 
         this.gameOverText = this.add.image(0, 0, "gameOverText");
-        this.restartGame = this.add.image(0, 0, "restart");
+        this.restartGame = this.add.image(0, 90, "restart");
 
         // Container for gameover text & restart game button
-        this.add.container(this.gameWidth * 0.5, this.gameHeight * 0.5)
-            .add([this.gameOverText, this.restartGame]);
+        this.gameOverContainer = this.add.container(this.gameWidth * 0.5, (this.gameHeight * 0.5 - 60))
+            .add([this.gameOverText, this.restartGame])
+            // Hide container
+            .setAlpha(0);
 
         // Trigger that starts the game. Invisible object that launch game.
         this.startGameTrigger = this.physics.add.sprite(0, 30, null).setAlpha(0).setOrigin(0, 1);
@@ -78,6 +81,9 @@ class PlayScene extends Phaser.Scene {
             this.obstacleSpeed = 0;
             this.spawnTime = 0;
             this.player.die();
+
+            // Show game over container
+            this.gameOverContainer.setAlpha(1);
         });
 
         // Move trigger to the ground after first touch
