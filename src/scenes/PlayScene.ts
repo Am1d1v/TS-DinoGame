@@ -58,21 +58,18 @@ class PlayScene extends Phaser.Scene {
     create(){  
         this.createSceneEnvironment();
         this.createPlayer();
-
-        // Array of obstacles
-        this.obstacles = this.physics.add.group();
-
-        this.gameOverText = this.add.image(0, 0, "gameOverText");
-        this.restartGame = this.add.image(0, 90, "restart");
-
-        // Container for gameover text & restart game button
-        this.gameOverContainer = this.add.container(this.gameWidth * 0.5, (this.gameHeight * 0.5 - 60))
-            .add([this.gameOverText, this.restartGame])
-            // Hide container
-            .setAlpha(0);
+        this.createObstacles();
+        this.createGameOverContainer();
 
         // Trigger that starts the game. Invisible object that launch game.
         this.startGameTrigger = this.physics.add.sprite(0, 30, null).setAlpha(0).setOrigin(0, 1);
+
+        // Restart the game
+        this.restartGame
+            .setInteractive()
+            .on('pointerdown', () => {
+            
+            });
 
         // Collide with obstacles
         this.physics.add.collider(this.obstacles, this.player, () => {
@@ -159,6 +156,22 @@ class PlayScene extends Phaser.Scene {
     createSceneEnvironment(){
         // Draw ground
         this.ground = this.add.tileSprite(0, this.gameHeight, 90, 26, 'ground').setOrigin(0, 1);
+    }
+
+    createObstacles(){
+        // Array of obstacles
+        this.obstacles = this.physics.add.group();
+    }
+    
+    createGameOverContainer(){
+        this.gameOverText = this.add.image(0, 0, "gameOverText");
+        this.restartGame = this.add.image(0, 90, "restart");
+
+        // Container for gameover text & restart game button
+        this.gameOverContainer = this.add.container(this.gameWidth * 0.5, (this.gameHeight * 0.5 - 60))
+            .add([this.gameOverText, this.restartGame])
+            // Hide container
+            .setAlpha(0);
     }
 
     // Render player 
