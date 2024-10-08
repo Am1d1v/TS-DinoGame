@@ -175,9 +175,17 @@ class PlayScene extends Phaser.Scene {
     handleGameRestart(){
          // Restart the game
          this.restartGame
-         .setInteractive()
-         .on('pointerdown', () => {
-         
+            .setInteractive()
+            .on('pointerdown', () => {
+                this.physics.resume();
+                this.player.setVelocityY(0);
+                // Clear obstacles array
+                this.obstacles.clear(true, true);
+                // Hide Game Over Container
+                this.gameOverContainer.setAlpha(0);
+                
+                //this.anims.resumeAll();
+                this.isGameRunning = true;
          });
 
     }
