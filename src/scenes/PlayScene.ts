@@ -60,68 +60,9 @@ class PlayScene extends Phaser.Scene {
         this.createPlayer();
         this.createObstacles();
         this.createGameOverContainer();
-
-        // Trigger that starts the game. Invisible object that launch game.
-        this.startGameTrigger = this.physics.add.sprite(0, 30, null).setAlpha(0).setOrigin(0, 1);
-
-        // Restart the game
-        this.restartGame
-            .setInteractive()
-            .on('pointerdown', () => {
-            
-            });
-
-        // Collide with obstacles
-        this.physics.add.collider(this.obstacles, this.player, () => {
-            this.isGameRunning = false;
-            this.physics.pause();
-            this.obstacleSpeed = 0;
-            this.spawnTime = 0;
-            this.player.die();
-
-            // Show game over container
-            this.gameOverContainer.setAlpha(1);
-        });
-
-        // Move trigger to the ground after first touch
-        this.physics.add.overlap(this.startGameTrigger, this.player, () => {
-            if(this.startGameTrigger.y === 30){
-                this.startGameTrigger.body.reset(0, this.gameHeight);
-                this.isGameRunning = true;
-                return;
-            }
-
-            // Hide start game trigger from the scene
-            this.startGameTrigger.body.reset(-100, -100);
-            
-            //this.startGroundRoll = true;
-
-            const groundRollOutEvent = this.time.addEvent({
-                delay: 1000 / 16,
-                loop: true,
-                callback: () => {
-                        // Roll out the ground
-                        this.ground.width += 45;
-
-                        // Game is running
-                        this.isGameRunning = true;
-
-                        // Play run aniamtion
-                        this.player.playRunAnimation();
-
-                        // Push player to the front(X axis direction)
-                        this.player.setVelocityX(150);
-
-                        if(this.ground.width >= this.gameWidth){
-                            groundRollOutEvent.remove();
-                            this.player.setVelocityX(0);
-                        }
-                }
-            });
-
-
-            
-        });
+        this.handeGameStart();
+        this.handleObstacleCollision();
+        this.handleGameRestart();   
     }
 
     // Update scene state
@@ -174,10 +115,76 @@ class PlayScene extends Phaser.Scene {
             .setAlpha(0);
     }
 
+    handeGameStart(){
+        // Trigger that starts the game. Invisible object that launch game.
+        this.startGameTrigger = this.physics.add.sprite(0, 30, null).setAlpha(0).setOrigin(0, 1);
+
+        // Move trigger to the ground after first touch
+        this.physics.add.overlap(this.startGameTrigger, this.player, () => {
+            if(this.startGameTrigger.y === 30){
+                this.startGameTrigger.body.reset(0, this.gameHeight);
+                this.isGameRunning = true;
+                return;
+            }
+
+            // Hide start game trigger from the scene
+            this.startGameTrigger.body.reset(-100, -100);
+            
+            //this.startGroundRoll = true;
+
+            const groundRollOutEvent = this.time.addEvent({
+                delay: 1000 / 16,
+                loop: true,
+                callback: () => {
+                        // Roll out the ground
+                        this.ground.width += 45;
+
+                        // Game is running
+                        this.isGameRunning = true;
+
+                        // Play run aniamtion
+                        this.player.playRunAnimation();
+
+                        // Push player to the front(X axis direction)
+                        this.player.setVelocityX(150);
+
+                        if(this.ground.width >= this.gameWidth){
+                            groundRollOutEvent.remove();
+                            this.player.setVelocityX(0);
+                        }
+                }
+            });
+
+        });
+    }
+
+    handleObstacleCollision(){
+        // Collide with obstacles
+        this.physics.add.collider(this.obstacles, this.player, () => {
+            this.isGameRunning = false;
+            this.physics.pause();
+            this.obstacleSpeed = 0;
+            this.spawnTime = 0;
+            this.player.die();
+
+            // Show game over container
+            this.gameOverContainer.setAlpha(1);
+        });
+    }
+
+    handleGameRestart(){
+         // Restart the game
+         this.restartGame
+         .setInteractive()
+         .on('pointerdown', () => {
+         
+         });
+
+    }
+
     // Render player 
     createPlayer(){
         this.player = new Player(this, 0, this.gameHeight, 'player').setOrigin(0, 1);
-
     }
 
     // Spawn Obstacles
