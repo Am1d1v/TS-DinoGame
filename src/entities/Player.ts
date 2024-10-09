@@ -53,7 +53,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if(!onFloor){
             this.anims.stop();
         } else {
-            this.play('player-run', true);
+            //this.play('player-run', true);
+            this.playRunAnimation();
         }
 
         // Prevent running on the same place on the start of the game
@@ -64,12 +65,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // Stop crouching increase player's height
         if(isDownJustPressedUp && onFloor){
             this.body.setSize(45, this.height - 10);
-            this.play('player-run', true);
+            //this.play('player-run', true);
         }
 
         // Make player crouch, decrease height
         if(isDownJustPressedDown && onFloor){
-            this.play('player-crouch', true);
+            //this.play('player-crouch', true);
             this.body.setSize(this.body.width, 60);
             this.setOffset(60, 30)
         }
@@ -77,7 +78,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Play run animation
     playRunAnimation(){
-        this.play('player-run', true);
+        this.body.height <= 60 ? this.play('player-crouch', true)
+                               : this.play('player-run', true)
     }
 
     // Register player animation
@@ -90,14 +92,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }),
             frameRate: 10,
             repeat: -1
-        })
+        });
 
         this.anims.create({
             key: 'player-crouch',
             frames: this.anims.generateFrameNumbers('crouch'),
             frameRate: 10,
             repeat: -1
-        })
+        });
     }
 
     // Loose Animation
