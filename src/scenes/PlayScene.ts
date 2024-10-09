@@ -184,8 +184,9 @@ class PlayScene extends Phaser.Scene {
                 // Hide Game Over Container
                 this.gameOverContainer.setAlpha(0);
                 
-                //this.anims.resumeAll();
+                this.anims.resumeAll();
                 this.isGameRunning = true;
+                this.obstacleSpeed = 5;
          });
 
     }

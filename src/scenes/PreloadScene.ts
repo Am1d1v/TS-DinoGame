@@ -33,6 +33,12 @@ class PreloadScene extends Phaser.Scene {
 
         // Load "Game Over" text png
         this.load.image('gameOverText', 'assets/game-over.png');
+
+        // Load player's crouch image
+        this.load.spritesheet('crouch', 'assets/dino-down-2.png', {
+            frameWidth: 118,
+            frameHeight: 94
+        });
     }
 
     create(){

@@ -72,6 +72,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             frameRate: 10,
             repeat: -1
         })
+
+        this.anims.create({
+            key: 'player-crouch',
+            frames: this.anims.generateFrameNumbers('crouch'),
+            frameRate: 10,
+            repeat: -1
+        })
     }
 
     // Loose Animation
