@@ -24,16 +24,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // Set world boundaries
             .setCollideWorldBounds(true)
             // Set Player's body size
-            .setBodySize(45, this.height - 10);   
+            .setBodySize(45, this.height - 10)
+            .setOffset(20, 0);
 
         this.registerPlayerAnimation();
     }
 
     update(): void {
         // Get space bar
-        const {space} = this.cursors; 
+        const {space, down} = this.cursors; 
+
         // Make space bar interactive once per push. Block holding space bar spam
         const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space);
+
+        // 
+        const isDownJustPressedDown = Phaser.Input.Keyboard.JustDown(down);
+        const isDownJustPressedUp = Phaser.Input.Keyboard.JustUp(down);
 
         // Check that the player is on the floor(ground)
         const onFloor = (this.body as Phaser.Physics.Arcade.Body).onFloor();
@@ -53,6 +59,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // Prevent running on the same place on the start of the game
         if(this.body.x < 22){
             this.anims.stop();
+        }
+
+        // Stop crouching increase player's height
+        if(isDownJustPressedUp && onFloor){
+            this.body.setSize(45, this.height - 10);
+            this.play('player-run', true);
+        }
+
+        // Make player crouch, decrease height
+        if(isDownJustPressedDown && onFloor){
+            this.play('player-crouch', true);
+            this.body.setSize(this.body.width, 60);
+            this.setOffset(60, 30)
         }
     }
 
