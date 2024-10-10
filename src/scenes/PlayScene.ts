@@ -1,6 +1,7 @@
 import Phaser, { Physics } from "phaser";
 import { SpriteWithDynamicBody } from "../types";
 import Player from "../entities/Player";
+import { PRELOAD_CONFIGURATION } from "..";
 
 
 class PlayScene extends Phaser.Scene {
@@ -198,13 +199,24 @@ class PlayScene extends Phaser.Scene {
 
     // Spawn Obstacles
     spawnObstacle(){
-        const randomObstacleNumber = Math.floor(Math.random() * 7) + 1;
+        const randomObstacleNumber = Math.floor(Math.random() * PRELOAD_CONFIGURATION.cactusesCount + PRELOAD_CONFIGURATION.birdsCount) + 1;
         const distance = Phaser.Math.Between(800, this.gameWidth);
-
-        this.obstacles.create(distance, this.gameHeight, `${randomObstacleNumber <= 6 ? `obstacle${randomObstacleNumber}` : 'bird'}`)
+        
+        if (randomObstacleNumber <= 6){
+            this.obstacles.create(distance, this.gameHeight, `obstacle${randomObstacleNumber}`)
             .setOrigin(0, 1)
             .setImmovable()
-        //this.add.image(this.gameWidth * 0.5, this.gameHeight * 0.1, `obstacle${randomObstacleNumber}`).setOrigin(0, 1);
+        } else {
+            // How hight (Y axis) enemy bird will spawn
+            const enemyPossibleHeight = [20, 70];
+            const enemyHeight = Math.random() * 100 > 50 ? enemyPossibleHeight[0] : enemyPossibleHeight[1]
+
+            this.obstacles.create(distance, this.gameHeight - enemyHeight, 'bird')
+            .setOrigin(0, 1)
+            .setImmovable()
+        }
+
+        
     }
 
     
