@@ -39,6 +39,12 @@ class PreloadScene extends Phaser.Scene {
             frameWidth: 118,
             frameHeight: 94
         });
+
+        // Load enemy bird type image
+        this.load.spritesheet('bird', 'assets/enemy-bird.png', {
+            frameWidth: 92,
+            frameHeight: 77
+        });
     }
 
     create(){

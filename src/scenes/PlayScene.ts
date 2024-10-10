@@ -198,10 +198,10 @@ class PlayScene extends Phaser.Scene {
 
     // Spawn Obstacles
     spawnObstacle(){
-        const randomObstacleNumber = Math.floor(Math.random() * 6) + 1;
+        const randomObstacleNumber = Math.floor(Math.random() * 7) + 1;
         const distance = Phaser.Math.Between(800, this.gameWidth);
 
-        this.obstacles.create(distance, this.gameHeight, `obstacle${randomObstacleNumber}`)
+        this.obstacles.create(distance, this.gameHeight, `${randomObstacleNumber <= 6 ? `obstacle${randomObstacleNumber}` : 'bird'}`)
             .setOrigin(0, 1)
             .setImmovable()
         //this.add.image(this.gameWidth * 0.5, this.gameHeight * 0.1, `obstacle${randomObstacleNumber}`).setOrigin(0, 1);
