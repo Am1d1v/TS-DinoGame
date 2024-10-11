@@ -90,8 +90,14 @@ class PlayScene extends Phaser.Scene {
             if(obstacle.getBounds().right < 0){
                 this.obstacles.remove(obstacle);
             }
-
         });
+
+        this.clouds.getChildren().forEach((cloud: SpriteWithDynamicBody) => {
+            if(cloud.getBounds().right < 0){
+                cloud.x = this.gameWidth + 300;
+            }
+        });
+        console.log(this.clouds)
 
         // Moving the ground in +X direction
         if(this.isGameRunning) this.ground.tilePositionX += this.gameSpeed;
