@@ -44,7 +44,7 @@ class PlayScene extends Phaser.Scene {
     gameOverText: Phaser.GameObjects.Image;
     restartGame: Phaser.GameObjects.Image;
     gameOverContainer: Phaser.GameObjects.Container;
-
+    clouds: Phaser.GameObjects.Group;
 
     // Get game height
     get gameHeight(){
@@ -99,6 +99,15 @@ class PlayScene extends Phaser.Scene {
     createSceneEnvironment(){
         // Draw ground
         this.ground = this.add.tileSprite(0, this.gameHeight, 90, 26, 'ground').setOrigin(0, 1);
+
+
+        this.clouds = this.add.group();
+        // Draw clouds
+        this.clouds = this.clouds.addMultiple([
+            this.add.image(this.gameWidth * 0.6, 200, 'cloud'),
+            this.add.image(this.gameWidth -80, 90, 'cloud'),
+            this.add.image(this.gameWidth * 0.3, 100, 'cloud'),
+        ]);
     }
 
     createObstacles(){

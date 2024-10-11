@@ -45,6 +45,9 @@ class PreloadScene extends Phaser.Scene {
             frameWidth: 92,
             frameHeight: 77
         });
+
+        // Load cloud image
+        this.load.image('cloud', 'assets/cloud.png');
     }
 
     create(){
