@@ -61,6 +61,7 @@ class PlayScene extends Phaser.Scene {
         this.createPlayer();
         this.createObstacles();
         this.createGameOverContainer();
+        this.createAnimations();
         this.handeGameStart();
         this.handleObstacleCollision();
         this.handleGameRestart();   
@@ -197,25 +198,37 @@ class PlayScene extends Phaser.Scene {
         this.player = new Player(this, 0, this.gameHeight, 'player').setOrigin(0, 1);
     }
 
+    // Bird enemy animation
+    createAnimations(){
+        this.anims.create({
+            key: 'enemy-bird-fly',
+            frames: this.anims.generateFrameNumbers("bird"),
+            frameRate: 6,
+            repeat: -1
+        })
+    }
+
     // Spawn Obstacles
     spawnObstacle(){
         const randomObstacleNumber = Math.floor(Math.random() * PRELOAD_CONFIGURATION.cactusesCount + PRELOAD_CONFIGURATION.birdsCount) + 1;
         const distance = Phaser.Math.Between(800, this.gameWidth);
+        let obstacle;
         
+        // Spawn obstacle cactus type
         if (randomObstacleNumber <= 6){
-            this.obstacles.create(distance, this.gameHeight, `obstacle${randomObstacleNumber}`)
-            .setOrigin(0, 1)
-            .setImmovable()
+            obstacle = this.obstacles.create(distance, this.gameHeight, `obstacle${randomObstacleNumber}`)
+            
         } else {
+            // Spawn obstacle bird type 
             // How hight (Y axis) enemy bird will spawn
             const enemyPossibleHeight = [20, 70];
             const enemyHeight = Math.random() * 100 > 50 ? enemyPossibleHeight[0] : enemyPossibleHeight[1]
 
-            this.obstacles.create(distance, this.gameHeight - enemyHeight, 'bird')
-            .setOrigin(0, 1)
-            .setImmovable()
+            obstacle = this.obstacles.create(distance, this.gameHeight - enemyHeight, 'bird');
+            obstacle.play('enemy-bird-fly', true);
         }
 
+        obstacle.setOrigin(0, 1).setImmovable()
         
     }
 
