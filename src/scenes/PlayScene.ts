@@ -80,7 +80,10 @@ class PlayScene extends Phaser.Scene {
         }
 
         // Make obstacles move to the player's direction
-        Phaser.Actions.IncX(this.obstacles.getChildren(), -this.obstacleSpeed) ;
+        Phaser.Actions.IncX(this.obstacles.getChildren(), -this.obstacleSpeed);
+
+        // Make clouds move to the left side
+        Phaser.Actions.IncX(this.clouds.getChildren(), -1);
 
         // Remove obstacle if its beyond left scene border
         this.obstacles.getChildren().forEach((obstacle: SpriteWithDynamicBody)  => {
@@ -100,7 +103,7 @@ class PlayScene extends Phaser.Scene {
         // Draw ground
         this.ground = this.add.tileSprite(0, this.gameHeight, 90, 26, 'ground').setOrigin(0, 1);
 
-
+        // Create clouds group
         this.clouds = this.add.group();
         // Draw clouds
         this.clouds = this.clouds.addMultiple([
@@ -108,6 +111,9 @@ class PlayScene extends Phaser.Scene {
             this.add.image(this.gameWidth -80, 90, 'cloud'),
             this.add.image(this.gameWidth * 0.3, 100, 'cloud'),
         ]);
+
+        // Hide clouds at the start of the game
+        this.clouds.setAlpha(0);
     }
 
     createObstacles(){
@@ -158,6 +164,9 @@ class PlayScene extends Phaser.Scene {
 
                         // Push player to the front(X axis direction)
                         this.player.setVelocityX(150);
+
+                        // Display clouds
+                        this.clouds.setAlpha(1);
 
                         if(this.ground.width >= this.gameWidth){
                             groundRollOutEvent.remove();
