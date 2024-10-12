@@ -41,6 +41,9 @@ class PlayScene extends Phaser.Scene {
     // Ground move speed
     gameSpeed: number = 1;
 
+    // Game score text
+    scoreText: Phaser.GameObjects.Text;
+
     gameOverText: Phaser.GameObjects.Image;
     restartGame: Phaser.GameObjects.Image;
     gameOverContainer: Phaser.GameObjects.Container;
@@ -62,6 +65,7 @@ class PlayScene extends Phaser.Scene {
         this.createObstacles();
         this.createGameOverContainer();
         this.createAnimations();
+        this.createScore();
         this.handeGameStart();
         this.handleObstacleCollision();
         this.handleGameRestart();   
@@ -97,7 +101,6 @@ class PlayScene extends Phaser.Scene {
                 cloud.x = this.gameWidth + 300;
             }
         });
-        console.log(this.clouds)
 
         // Moving the ground in +X direction
         if(this.isGameRunning) this.ground.tilePositionX += this.gameSpeed;
@@ -230,7 +233,16 @@ class PlayScene extends Phaser.Scene {
             frameRate: 6,
             repeat: -1
         })
-    }
+    };
+
+    // Game Score Text
+    createScore(){
+        this.scoreText = this.add.text(this.gameWidth - 120, 50, "000000", {
+            fontSize: 30,
+            fontFamily: "Arial",
+            color: "#333"
+        } ).setOrigin(0, 1);
+    };
 
     // Spawn Obstacles
     spawnObstacle(){
