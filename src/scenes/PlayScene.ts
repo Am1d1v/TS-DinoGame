@@ -44,6 +44,13 @@ class PlayScene extends Phaser.Scene {
     // Game score text
     scoreText: Phaser.GameObjects.Text;
 
+    score: number = 0;
+
+    // How often score increment
+    scoreInterval: number = 100;
+
+    scoreDeltaTime: number = 0;
+
     gameOverText: Phaser.GameObjects.Image;
     restartGame: Phaser.GameObjects.Image;
     gameOverContainer: Phaser.GameObjects.Container;
@@ -82,6 +89,15 @@ class PlayScene extends Phaser.Scene {
                 this.spawnTime = 0;
             }
         }
+
+        // Score Increment
+        this.scoreDeltaTime += delta;
+
+        if(this.scoreDeltaTime >= this.scoreInterval && this.isGameRunning){
+            this.score++;
+            this.scoreDeltaTime = 0;
+        }
+        console.log(this.score)
 
         // Make obstacles move to the player's direction
         Phaser.Actions.IncX(this.obstacles.getChildren(), -this.obstacleSpeed);
@@ -156,7 +172,8 @@ class PlayScene extends Phaser.Scene {
             // Hide start game trigger from the scene
             this.startGameTrigger.body.reset(-100, -100);
             
-            //this.startGroundRoll = true;
+            // Show game score
+            this.scoreText.setAlpha(1);
 
             const groundRollOutEvent = this.time.addEvent({
                 delay: 1000 / 16,
@@ -195,6 +212,8 @@ class PlayScene extends Phaser.Scene {
             this.obstacleSpeed = 0;
             this.spawnTime = 0;
             this.player.die();
+            this.scoreDeltaTime = 0;
+            this.score = 0;
 
             // Show game over container
             this.gameOverContainer.setAlpha(1);
@@ -240,8 +259,10 @@ class PlayScene extends Phaser.Scene {
         this.scoreText = this.add.text(this.gameWidth - 120, 50, "000000", {
             fontSize: 30,
             fontFamily: "Arial",
-            color: "#333"
-        } ).setOrigin(0, 1);
+            color: "#333", 
+            resolution: 3
+        } ).setOrigin(0, 1)
+           .setAlpha(0);
     };
 
     // Spawn Obstacles
