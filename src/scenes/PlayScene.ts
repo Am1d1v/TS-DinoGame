@@ -41,6 +41,9 @@ class PlayScene extends Phaser.Scene {
     // Ground move speed
     gameSpeed: number = 1;
 
+    // Game speed modifier. Increase depends on current score
+    gameSpeedModifier:number = 2; 
+
     // Game score text
     scoreText: Phaser.GameObjects.Text;
 
@@ -100,7 +103,7 @@ class PlayScene extends Phaser.Scene {
         console.log(this.score)
 
         // Make obstacles move to the player's direction
-        Phaser.Actions.IncX(this.obstacles.getChildren(), -this.obstacleSpeed);
+        Phaser.Actions.IncX(this.obstacles.getChildren(), -this.obstacleSpeed * this.gameSpeedModifier);
 
         // Make clouds move to the left side
         Phaser.Actions.IncX(this.clouds.getChildren(), -1);
@@ -127,7 +130,7 @@ class PlayScene extends Phaser.Scene {
         });
 
         // Moving the ground in +X direction
-        if(this.isGameRunning) this.ground.tilePositionX += this.gameSpeed;
+        if(this.isGameRunning) this.ground.tilePositionX += (this.gameSpeed * this.gameSpeedModifier);
     
     }
 
