@@ -105,6 +105,14 @@ class PlayScene extends Phaser.Scene {
         // Make clouds move to the left side
         Phaser.Actions.IncX(this.clouds.getChildren(), -1);
 
+        const score = Array.from(String(this.score), Number);
+
+        for (let i = 0; i < 5 - String(this.score).length; i++) {
+            score.unshift(0);
+        };
+
+        this.scoreText.setText(score.join(''));
+
         // Remove obstacle if its beyond left scene border
         this.obstacles.getChildren().forEach((obstacle: SpriteWithDynamicBody)  => {
             if(obstacle.getBounds().right < 0){
