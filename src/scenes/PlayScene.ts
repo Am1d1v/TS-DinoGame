@@ -42,7 +42,7 @@ class PlayScene extends Phaser.Scene {
     gameSpeed: number = 1;
 
     // Game speed modifier. Increase depends on current score
-    gameSpeedModifier:number = 2; 
+    gameSpeedModifier: number = 1; 
 
     // Game score text
     scoreText: Phaser.GameObjects.Text;
@@ -99,8 +99,13 @@ class PlayScene extends Phaser.Scene {
         if(this.scoreDeltaTime >= this.scoreInterval && this.isGameRunning){
             this.score++;
             this.scoreDeltaTime = 0;
+
+            // Increase game speed modifier per 100 score points
+            if(this.score % 100 === 0 && this.score !== 0) this.gameSpeedModifier += 0.05;
+            console.log(this.gameSpeedModifier)
         }
-        console.log(this.score)
+
+        
 
         // Make obstacles move to the player's direction
         Phaser.Actions.IncX(this.obstacles.getChildren(), -this.obstacleSpeed * this.gameSpeedModifier);
@@ -246,6 +251,9 @@ class PlayScene extends Phaser.Scene {
                 this.anims.resumeAll();
                 this.isGameRunning = true;
                 this.obstacleSpeed = 5;
+
+                // Return games speed modifier to defaul value
+                this.gameSpeedModifier = 1;
          });
 
     }
