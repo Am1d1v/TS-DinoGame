@@ -100,8 +100,9 @@ class PlayScene extends Phaser.Scene {
             this.score++;
             this.scoreDeltaTime = 0;
 
-            // Increase game speed modifier per 100 score points
-            if(this.score % 100 === 0 && this.score !== 0) this.gameSpeedModifier += 0.05;
+            // Increase game speed modifier per scoresToSpeedUpGame value
+            const scoresToSpeedUpGame = 100
+            if(this.score % scoresToSpeedUpGame === 0 && this.score !== 0) this.gameSpeedModifier += 0.05;
             console.log(this.gameSpeedModifier)
         }
 
