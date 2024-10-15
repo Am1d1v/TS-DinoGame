@@ -54,6 +54,9 @@ class PlayScene extends Phaser.Scene {
 
     scoreDeltaTime: number = 0;
 
+    // Heighest score
+    heightestScore: Phaser.GameObjects.Text;
+
     gameOverText: Phaser.GameObjects.Image;
     restartGame: Phaser.GameObjects.Image;
     gameOverContainer: Phaser.GameObjects.Container;
@@ -192,6 +195,9 @@ class PlayScene extends Phaser.Scene {
             // Show game score
             this.scoreText.setAlpha(1);
 
+            // Hide highest player score
+            this.heightestScore.setAlpha(0);
+
             const groundRollOutEvent = this.time.addEvent({
                 delay: 1000 / 16,
                 loop: true,
@@ -234,6 +240,9 @@ class PlayScene extends Phaser.Scene {
 
             // Show game over container
             this.gameOverContainer.setAlpha(1);
+
+            // Show player's heighest score
+            this.heightestScore.setAlpha(1);
         });
     }
 
@@ -276,13 +285,23 @@ class PlayScene extends Phaser.Scene {
 
     // Game Score Text
     createScore(){
+        // Current Score
         this.scoreText = this.add.text(this.gameWidth - 120, 50, "000000", {
             fontSize: 30,
             fontFamily: "Arial",
             color: "#333", 
             resolution: 3
-        } ).setOrigin(0, 1)
-           .setAlpha(0);
+        }).setOrigin(0, 1)
+          .setAlpha(0);
+
+        // Heighest Score
+        this.heightestScore = this.add.text(this.gameWidth - 250, 50, '111111', {
+            fontSize: 30,
+            fontFamily: "Arial",
+            color: "#333", 
+            resolution: 3
+        }).setOrigin(0, 1)
+          .setAlpha(0);
     };
 
     // Spawn Obstacles
