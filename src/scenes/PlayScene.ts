@@ -57,6 +57,9 @@ class PlayScene extends Phaser.Scene {
     // Heighest score
     highestScore: Phaser.GameObjects.Text;
 
+    // Hit with obstacle sound
+    hitObstacle: Phaser.Sound.HTML5AudioSound;
+
     gameOverText: Phaser.GameObjects.Image;
     restartGame: Phaser.GameObjects.Image;
     gameOverContainer: Phaser.GameObjects.Container;
@@ -159,6 +162,10 @@ class PlayScene extends Phaser.Scene {
 
         // Hide clouds at the start of the game
         this.clouds.setAlpha(0);
+
+        this.hitObstacle = this.sound.add('hit', {
+            volume: 1
+        }) as Phaser.Sound.HTML5AudioSound;
     }
 
     createObstacles(){
@@ -243,7 +250,7 @@ class PlayScene extends Phaser.Scene {
             // Set Highest score
             let newHighScore = this.highestScore.text.substring(this.highestScore.text.length - 5);
             let newScore = Number(this.scoreText.text) > Number(newHighScore) ? this.scoreText.text : newHighScore;
-            
+
             // Set the highest score in localStorage
             localStorage.setItem('highestScore', newScore);
             newScore = Number(newScore) > Number(localStorage.getItem('highestScore')) ? newScore : localStorage.getItem('highestScore');
@@ -256,6 +263,9 @@ class PlayScene extends Phaser.Scene {
             
             // Set current score to 0
             this.score = 0;
+
+            // Play 'Hit' sound when player collide with obstacle
+            this.hitObstacle.play();
         });
     }
 

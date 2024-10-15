@@ -51,6 +51,9 @@ class PreloadScene extends Phaser.Scene {
 
         // Load jump sound
         this.load.audio('jump', 'assets/jump.m4a');
+
+        // Load hit with obstacle sound
+        this.load.audio('hit', 'assets/hit.m4a');
     }
 
     create(){
