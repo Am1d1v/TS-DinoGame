@@ -55,7 +55,7 @@ class PlayScene extends Phaser.Scene {
     scoreDeltaTime: number = 0;
 
     // Heighest score
-    heightestScore: Phaser.GameObjects.Text;
+    highestScore: Phaser.GameObjects.Text;
 
     gameOverText: Phaser.GameObjects.Image;
     restartGame: Phaser.GameObjects.Image;
@@ -196,7 +196,7 @@ class PlayScene extends Phaser.Scene {
             this.scoreText.setAlpha(1);
 
             // Hide highest player score
-            this.heightestScore.setAlpha(0);
+            this.highestScore.setAlpha(0);
 
             const groundRollOutEvent = this.time.addEvent({
                 delay: 1000 / 16,
@@ -236,13 +236,26 @@ class PlayScene extends Phaser.Scene {
             this.spawnTime = 0;
             this.player.die();
             this.scoreDeltaTime = 0;
-            this.score = 0;
 
             // Show game over container
             this.gameOverContainer.setAlpha(1);
 
+            // Set Highest score
+            let newHighScore = this.highestScore.text.substring(this.highestScore.text.length - 5);
+            let newScore = Number(this.scoreText.text) > Number(newHighScore) ? this.scoreText.text : newHighScore;
+            
+            // Set the highest score in localStorage
+            localStorage.setItem('highestScore', newScore);
+            newScore = Number(newScore) > Number(localStorage.getItem('highestScore')) ? newScore : localStorage.getItem('highestScore');
+
+            // Set the hightest score
+            this.highestScore.setText(newScore);
+
             // Show player's heighest score
-            this.heightestScore.setAlpha(1);
+            this.highestScore.setAlpha(1);
+            
+            // Set current score to 0
+            this.score = 0;
         });
     }
 
@@ -264,6 +277,9 @@ class PlayScene extends Phaser.Scene {
 
                 // Return games speed modifier to defaul value
                 this.gameSpeedModifier = 1;
+
+                // Hide player's heighest score
+                this.highestScore.setAlpha(0);
          });
 
     }
@@ -294,8 +310,9 @@ class PlayScene extends Phaser.Scene {
         }).setOrigin(0, 1)
           .setAlpha(0);
 
-        // Heighest Score
-        this.heightestScore = this.add.text(this.gameWidth - 250, 50, '111111', {
+ 
+        // Highest Score
+        this.highestScore = this.add.text(this.gameWidth - 250, 50, '0', {
             fontSize: 30,
             fontFamily: "Arial",
             color: "#333", 
