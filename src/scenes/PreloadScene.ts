@@ -48,6 +48,9 @@ class PreloadScene extends Phaser.Scene {
 
         // Load cloud image
         this.load.image('cloud', 'assets/cloud.png');
+
+        // Load jump sound
+        this.load.audio('jump', 'assets/jump.m4a');
     }
 
     create(){

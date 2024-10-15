@@ -4,6 +4,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
+    jumpSound: Phaser.Sound.HTML5AudioSound;
+
     constructor(scene: Phaser.Scene, x: number, y: number, key: string){
         super(scene, x, y, key);
 
@@ -13,6 +15,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.init();
         this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
     }
+
 
     // Player initialization
     init(){
@@ -28,6 +31,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             .setOffset(20, 0);
 
         this.registerPlayerAnimation();
+
+        this.jumpSound = this.scene.sound.add('jump', {
+            volume: 1
+        }) as Phaser.Sound.HTML5AudioSound;
     }
 
     update(): void {
@@ -47,6 +54,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // Jump(Change Y velocity) using space bar 
         if(isSpaceJustDown && onFloor){
             this.setVelocityY(-1000);
+
+            // Play 'Jump' sound when player jumping
+            this.jumpSound.play();
         }
 
         // Stop running animation while player is not on the floor
